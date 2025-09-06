@@ -29,11 +29,13 @@ func CleanAddresses(addresses []string) []string {
 }
 
 // PreparePayload prepares the payload for the API
-func PreparePayload(appID string, addresses []string, message string) []byte {
+func PreparePayload(appID string, addresses []string, title string, message string, miniAppPath string) []byte {
 	payload := common.Payload{
 		AppID:     appID,
 		Addresses: addresses,
+		Title:     title,
 		Message:   message,
+		MiniAppPath: miniAppPath,
 	}
 
 	data, err := json.Marshal(payload)
