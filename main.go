@@ -1,8 +1,8 @@
 package main
 
 import (
-	"math/rand"
 	"log"
+	"math/rand"
 	"os"
 	"tamagotchi-push-notis/http"
 	"tamagotchi-push-notis/parser"
@@ -11,11 +11,17 @@ import (
 
 var (
 	messages = map[string]string{
-		"Play!":  "Be the top 1, keep playing minigames!",
-		"Care":   "Remember to clean your Beasts!",
-		"Feed":   "Don't forget to feed your Beasts!",
-		"Hungry": "Your Beast might be hungry!",
-		"Happy":  "Keep it up one day is one year!",
+		"Play!":      "🎮 Be the top 1 — keep playing minigames!",
+		"Care":       "🧼 Remember to clean your Beasts!",
+		"Feed":       "🍗 Don't forget to feed your Beasts!",
+		"Hungry":     "🍽️ Your Beast might be hungry!",
+		"Happy":      "😄 Keep it up — one day is one year!",
+		"Sleep":      "🌙 Bedtime! Let your Beast recharge.",
+		"Energy Low": "⚡️ Energy is low — a boost could help.",
+		"Level Up":   "⭐️ So close to leveling up — one more game!",
+		"Name Time":  "🏷️ Give your Beast a cool new name!",
+		"Clean Up":   "🫧 Mud alert! Your Beast needs a bath.",
+		"Miss You":   "👋 Your Beast misses you — come say hi!",
 	}
 )
 
@@ -38,6 +44,9 @@ func main() {
 	}
 	defer response.Body.Close()
 
+	// Log response status for debugging
+	log.Printf("HTTP Response Status: %s (Code: %d)\n", response.Status, response.StatusCode)
+
 	// Parse CSV response
 	csvParser := parser.NewParser(response.Body)
 	csvData, err := csvParser.Parse()
@@ -52,13 +61,13 @@ func main() {
 		return
 	}
 
-	// Clean the addresses from the first (and only) column
-	// cleanedAddresses := utils.CleanAddresses(csvData.GetColumn(csvData.Headers[0]))
+	// Get raw addresses from CSV
+	rawAddresses := csvData.GetColumn(csvData.Headers[0])
+	// log.Printf("Raw addresses from CSV: %v\n", rawAddresses)
 
-	// Use dummy addresses for testing
-	dummyAddresses := []string{
-		"0x7b9e2692aa4b72e325808611d10ca128b8bc8eb6",
-	}
+	// Clean the addresses from the first (and only) column
+	cleanedAddresses := utils.CleanAddresses(rawAddresses)
+	// log.Printf("Cleaned addresses: %v\n", cleanedAddresses)
 
 	// Pick a random message from the map
 	keys := make([]string, 0, len(messages))
@@ -76,7 +85,7 @@ func main() {
 	}
 
 	// Prepare the payload with dummy addresses for testing
-	payload := utils.PreparePayload(appID, dummyAddresses, title, message, "worldapp://mini-app?app_id="+appID)
+	payload := utils.PreparePayload(appID, cleanedAddresses, title, message, "worldapp://mini-app?app_id="+appID)
 	log.Printf("Payload: %s\n", string(payload))
 
 	// Get URL and bearer token from environment variables

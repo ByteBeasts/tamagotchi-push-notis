@@ -11,15 +11,23 @@ import (
 func extractUsernameFromEmail(email string) string {
 	trimmed := strings.TrimSpace(email)
 
-	if strings.Contains(trimmed, "@") {
-		parts := strings.Split(trimmed, "@")
+	// Remove leading single quote if present
+	if strings.HasPrefix(trimmed, "'") {
+		trimmed = trimmed[1:]
+	}
+
+	// Remove spaces
+	cleaned := strings.ReplaceAll(trimmed, " ", "")
+
+	if strings.Contains(cleaned, "@") {
+		parts := strings.Split(cleaned, "@")
 		if len(parts) > 0 {
 			return parts[0]
 		}
 	}
 
-	// If no @ symbol, return the original address
-	return trimmed
+	// If no @ symbol, return the cleaned address
+	return cleaned
 }
 
 // addWalletPrefix adds "0x" prefix to an address if it doesn't already have it
