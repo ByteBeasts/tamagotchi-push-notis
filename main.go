@@ -53,8 +53,8 @@ func main() {
 
 
 	// Get URL and bearer token from environment variables
-	worldUrl := os.Getenv("WORLD_APP_URL")
-	worldBearer := os.Getenv("WORLD_APP_BEARER")
+	worldUrl := os.Getenv("WORLD_URL")
+	worldBearer := os.Getenv("WORLD_BEARER")
 
 	if worldUrl == "" || worldBearer == "" {
 		fmt.Println("Error: CAVOS_URL and CAVOS_BEARER environment variables are required")
