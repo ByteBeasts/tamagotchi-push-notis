@@ -12,9 +12,7 @@ func extractUsernameFromEmail(email string) string {
 	trimmed := strings.TrimSpace(email)
 
 	// Remove leading single quote if present
-	if strings.HasPrefix(trimmed, "'") {
-		trimmed = trimmed[1:]
-	}
+	trimmed = strings.TrimPrefix(trimmed, "'")
 
 	// Remove spaces
 	cleaned := strings.ReplaceAll(trimmed, " ", "")
@@ -41,6 +39,32 @@ func addWalletPrefix(address string) string {
 // isValidWalletAddress checks if an address is a valid wallet address (42 characters including 0x)
 func isValidWalletAddress(address string) bool {
 	return len(address) == 42
+}
+
+// BatchedAddresses batches the addresses into smaller arrays of the given size
+func BatchedAddresses(addresses []string, batchSize int) [][]string {
+	var batchedAddresses [][]string
+	var currentBatch []string
+
+	for _, address := range addresses {
+		// Only add non-empty addresses
+		if strings.TrimSpace(address) != "" {
+			currentBatch = append(currentBatch, address)
+
+			// When batch is full, add it to the result and start a new batch
+			if len(currentBatch) == batchSize {
+				batchedAddresses = append(batchedAddresses, currentBatch)
+				currentBatch = []string{}
+			}
+		}
+	}
+
+	// Add the remaining addresses if any
+	if len(currentBatch) > 0 {
+		batchedAddresses = append(batchedAddresses, currentBatch)
+	}
+
+	return batchedAddresses
 }
 
 // CleanAddresses cleans the addresses by removing the part after the @ symbol,

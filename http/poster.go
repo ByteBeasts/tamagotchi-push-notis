@@ -22,7 +22,7 @@ func NewPoster(url string, bearer string, data []byte) *Poster {
 		url:    url,
 		bearer: bearer,
 		client: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: 180 * time.Second,
 		},
 		data:   data,
 	}

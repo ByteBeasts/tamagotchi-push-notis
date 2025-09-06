@@ -20,7 +20,7 @@ func NewRequester(url string, bearer string) *Requester {
 		url:    url,
 		bearer: bearer,
 		client: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: 180 * time.Second,
 		},
 	}
 }
