@@ -1,19 +1,16 @@
 package main
 
 import (
+	"log"
 	"tamagotchi-push-notis/utils"
 )
 
 func main() {
-	// Validate environment variables
-	cavosUrl, cavosBearer, worldUrl, worldBearer, appID := utils.ValidateEnvironmentVariables()
+	log.Println("ByteBeasts Tamagotchi Push Notifications Service Starting...")
 
-	// Fetch and parse CSV data from Cavos API
-	csvData := utils.FetchCSVData(cavosUrl, cavosBearer)
+	// Start the scheduler that runs every 9 hours
+	utils.StartScheduler()
 
-	// Process addresses from CSV
-	cleanedAddresses := utils.ProcessAddresses(csvData)
-
-	// Send notifications to all batches using the WorldCoin API
-	utils.SendAllNotifications(cleanedAddresses, appID, worldUrl, worldBearer)
+	// Keep the main thread alive
+	select {}
 }

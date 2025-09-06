@@ -6,6 +6,7 @@ import (
 	"os"
 	"tamagotchi-push-notis/http"
 	"tamagotchi-push-notis/parser"
+	"time"
 )
 
 const BatchSize = 500
@@ -139,4 +140,43 @@ func SendAllNotifications(addresses []string, appID, worldUrl, worldBearer strin
 	for _, batch := range batchedAddresses {
 		sendBatchNotification(batch, appID, worldUrl, worldBearer)
 	}
+}
+
+// RunNotificationProcess executes the complete notification process
+func RunNotificationProcess() {
+	log.Println("Starting notification process...")
+
+	// Validate environment variables
+	cavosUrl, cavosBearer, worldUrl, worldBearer, appID := ValidateEnvironmentVariables()
+
+	// Fetch and parse CSV data from Cavos API
+	csvData := FetchCSVData(cavosUrl, cavosBearer)
+
+	// Process addresses from CSV
+	cleanedAddresses := ProcessAddresses(csvData)
+
+	// Send notifications to all batches using the WorldCoin API
+	SendAllNotifications(cleanedAddresses, appID, worldUrl, worldBearer)
+
+	log.Println("Notification process completed successfully!")
+}
+
+// StartScheduler starts a goroutine that runs the notification process every 9 hours
+func StartScheduler() {
+	log.Println("Starting notification scheduler (every 9 hours)...")
+
+	// Run immediately on startup
+	RunNotificationProcess()
+
+	// Create a ticker for 9 hours
+	ticker := time.NewTicker(9 * time.Hour)
+	defer ticker.Stop()
+
+	// Run in a goroutine to keep the main thread free
+	go func() {
+		for range ticker.C {
+			log.Println("Scheduled notification process triggered...")
+			RunNotificationProcess()
+		}
+	}()
 }
