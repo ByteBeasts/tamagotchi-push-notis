@@ -7,34 +7,62 @@ import (
 	"tamagotchi-push-notis/common"
 )
 
-// CleanAddresses cleans the addresses by removing the part after the @ symbol
-func CleanAddresses(addresses []string) []string {
-	var cleanedAddresses []string
-	for _, address := range addresses {
-		// Trim whitespace first
-		trimmed := strings.TrimSpace(address)
+// extractUsernameFromEmail extracts the username part from an email address
+func extractUsernameFromEmail(email string) string {
+	trimmed := strings.TrimSpace(email)
 
-		// Extract the part before @ symbol
-		if strings.Contains(trimmed, "@") {
-			parts := strings.Split(trimmed, "@")
-			if len(parts) > 0 {
-				cleanedAddresses = append(cleanedAddresses, parts[0])
-			}
-		} else {
-			// If no @ symbol, keep the original address
-			cleanedAddresses = append(cleanedAddresses, trimmed)
+	if strings.Contains(trimmed, "@") {
+		parts := strings.Split(trimmed, "@")
+		if len(parts) > 0 {
+			return parts[0]
 		}
 	}
+
+	// If no @ symbol, return the original address
+	return trimmed
+}
+
+// addWalletPrefix adds "0x" prefix to an address if it doesn't already have it
+func addWalletPrefix(address string) string {
+	if strings.HasPrefix(address, "0x") {
+		return address
+	}
+	return "0x" + address
+}
+
+// isValidWalletAddress checks if an address is a valid wallet address (42 characters including 0x)
+func isValidWalletAddress(address string) bool {
+	return len(address) == 42
+}
+
+// CleanAddresses cleans the addresses by removing the part after the @ symbol,
+// adding 0x prefix, and filtering out invalid wallet addresses
+func CleanAddresses(addresses []string) []string {
+	var cleanedAddresses []string
+
+	for _, address := range addresses {
+		// Extract username from email
+		username := extractUsernameFromEmail(address)
+
+		// Add wallet prefix
+		walletAddress := addWalletPrefix(username)
+
+		// Only keep valid wallet addresses (42 characters)
+		if isValidWalletAddress(walletAddress) {
+			cleanedAddresses = append(cleanedAddresses, walletAddress)
+		}
+	}
+
 	return cleanedAddresses
 }
 
 // PreparePayload prepares the payload for the API
 func PreparePayload(appID string, addresses []string, title string, message string, miniAppPath string) []byte {
 	payload := common.Payload{
-		AppID:     appID,
-		Addresses: addresses,
-		Title:     title,
-		Message:   message,
+		AppID:       appID,
+		Addresses:   addresses,
+		Title:       title,
+		Message:     message,
 		MiniAppPath: miniAppPath,
 	}
 
