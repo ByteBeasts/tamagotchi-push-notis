@@ -6,7 +6,6 @@ import (
 	"os"
 	"tamagotchi-push-notis/http"
 	"tamagotchi-push-notis/parser"
-	"time"
 )
 
 const BatchSize = 500
@@ -159,24 +158,4 @@ func RunNotificationProcess() {
 	SendAllNotifications(cleanedAddresses, appID, worldUrl, worldBearer)
 
 	log.Println("Notification process completed successfully!")
-}
-
-// StartScheduler starts a goroutine that runs the notification process every 9 hours
-func StartScheduler() {
-	log.Println("Starting notification scheduler (every 9 hours)...")
-
-	// Run immediately on startup
-	RunNotificationProcess()
-
-	// Create a ticker for 9 hours
-	ticker := time.NewTicker(9 * time.Hour)
-	defer ticker.Stop()
-
-	// Run in a goroutine to keep the main thread free
-	go func() {
-		for range ticker.C {
-			log.Println("Scheduled notification process triggered...")
-			RunNotificationProcess()
-		}
-	}()
 }
