@@ -12,17 +12,10 @@ const BatchSize = 500
 
 var (
 	Messages = map[string]string{
-		"Play!":      "🎮 Be the top 1 — keep playing minigames!",
-		"Care":       "🧼 Remember to clean your Beasts!",
-		"Feed":       "🍗 Don't forget to feed your Beasts!",
-		"Hungry":     "🍽️ Your Beast might be hungry!",
-		"Happy":      "😄 Keep it up — one day is one year!",
-		"Sleep":      "🌙 Bedtime! Let your Beast recharge.",
-		"Energy Low": "⚡️ Energy is low — a boost could help.",
-		"Level Up":   "⭐️ So close to leveling up — one more game!",
-		"Name Time":  "🏷️ Give your Beast a cool new name!",
-		"Clean Up":   "🫧 Mud alert! Your Beast needs a bath.",
-		"Miss You":   "👋 Your Beast misses you — come say hi!",
+		"Earn $WLD":      "🏆 Join the tournament and earn $WLD rewards!",
+		"Tournament":       "Minigames Tournament is live! Play to earn $WLD rewards!",
+		"$WLD Rewards":     "💰 $WLD rewards are waiting! Play minigames to earn!",
+		"Tournament Live":   "Minigames Tournament is live! Play to earn $WLD rewards!",
 	}
 
 	WorldAppPath = "worldapp://mini-app?app_id="
