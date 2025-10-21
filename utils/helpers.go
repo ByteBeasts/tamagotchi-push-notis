@@ -12,10 +12,10 @@ const BatchSize = 500
 
 var (
 	Messages = map[string]string{
-		"Earn $WLD":      "🏆 Join the tournament and earn $WLD rewards!",
-		"Tournament":       "Minigames Tournament is live! Play to earn $WLD rewards!",
-		"$WLD Rewards":     "💰 $WLD rewards are waiting! Play minigames to earn!",
-		"Tournament Live":   "Minigames Tournament is live! Play to earn $WLD rewards!",
+		"Earn $USDC":      "🏆 Join the tournament and earn $USDC rewards!",
+		"Tournament":       "Minigames Tournament is live! Play to earn $USDC rewards!",
+		"$USDC Rewards":     "💰 $USDC rewards are waiting! Play minigames to earn!",
+		"Tournament Live":   "Minigames Tournament is live! Play to earn $USDC rewards!",
 	}
 
 	WorldAppPath = "worldapp://mini-app?app_id="
