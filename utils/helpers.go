@@ -12,10 +12,26 @@ const BatchSize = 500
 
 var (
 	Messages = map[string]string{
-		"Earn $USDC":      "🏆 Join the tournament and earn $USDC rewards!",
-		"Tournament":       "Minigames Tournament is live! Play to earn $USDC rewards!",
-		"$USDC Rewards":     "💰 $USDC rewards are waiting! Play minigames to earn!",
-		"Tournament Live":   "Minigames Tournament is live! Play to earn $USDC rewards!",
+		// Habit Tracker focused messages
+		"Habits":     "🎯 Complete your daily habits and earn rewards for your beast!",
+		"Streak":     "🔥 Don't break your streak! Check off today's habits.",
+		"Morning":    "☀️ Good morning! Time to crush your daily goals!",
+		"Reminder":   "⏰ You have habits to complete — your Beast is counting on you!",
+		"Productive": "💪 Stay productive! Complete habits to level up your Beast.",
+		
+		// Beast care messages (updated with habit focus)
+		"Care":       "🧼 Clean your Beast after completing your habits!",
+		"Feed":       "🍗 Finish your habits to earn food for your Beast!",
+		"Happy":      "😄 Your Beast loves when you're productive!",
+		"Sleep":      "🌙 Rest well — tomorrow brings new habits to conquer!",
+		"Energy Low": "⚡️ Low energy? Complete habits to boost your Beast!",
+		
+		// Engagement messages
+		"Play":       "🎮 Take a break! Play minigames after your habits.",
+		"Level Up":   "⭐️ Complete habits to unlock rewards and level up!",
+		"Miss You":   "👋 Your Beast and habits are waiting for you!",
+		"Comeback":   "✨ Welcome back! Ready to tackle today's goals?",
+		"Champion":   "🏅 You're a productivity champion! Keep it up!",
 	}
 
 	WorldAppPath = "worldapp://mini-app?app_id="
